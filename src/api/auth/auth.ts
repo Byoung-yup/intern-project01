@@ -1,6 +1,7 @@
 import axios from "axios";
 import { SignInForm, SignUpForm, User } from "../../types";
 import axiosAuthInstance from "./axiosAuthInstance";
+import useAuthStore from "../../stores/authStore";
 
 // 공통 에러 핸들러
 const handleError = (error: unknown): string => {
@@ -43,7 +44,9 @@ export const signIn = async (data: SignInForm) => {
   }
 };
 
-export const getUser = async (accessToken: string): Promise<User> => {
+export const getUser = async (): Promise<User> => {
+  const accessToken = useAuthStore((state) => state.accessToken);
+
   try {
     const response = await axiosAuthInstance.get("/user", {
       headers: {
@@ -56,6 +59,30 @@ export const getUser = async (accessToken: string): Promise<User> => {
     }
 
     return response.data;
+  } catch (error) {
+    throw new Error(handleError(error));
+  }
+};
+
+export const updateUser = async (data: User): Promise<string> => {
+  const accessToken = useAuthStore((state) => state.accessToken);
+
+  try {
+    const response = await axiosAuthInstance.patch("/profile", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        body: JSON.stringify({
+          nickname: data.nickname,
+          avatar: data.avatar,
+        }),
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error("유저 정보를 수정하는데 실패했습니다.");
+    }
+
+    return "유저 정보가 수정되었습니다!";
   } catch (error) {
     throw new Error(handleError(error));
   }
