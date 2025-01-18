@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
 import RootLayout from "../components/layout/RootLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
+import MyPage from "../pages/profile/MyPage";
 
 const Router = () => {
   return (
@@ -23,6 +24,7 @@ const Router = () => {
           </Route>
 
           <Route element={<ProtectedRoute />}>
+            <Route path="/myPage" element={<MyPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Route>
