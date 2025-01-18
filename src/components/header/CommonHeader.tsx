@@ -8,7 +8,7 @@ const CommonHeader: React.FC = () => {
           로그인
         </Link>
         <Link to="signUp" className="border-none rounded-lg bg-green-500 text-white font-semibold p-2">
-          로그아웃
+          회원가입
         </Link>
       </div>
     </div>
