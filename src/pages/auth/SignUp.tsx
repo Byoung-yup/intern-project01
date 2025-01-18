@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { SignUpForm } from "../../types";
 import { signUp } from "../../api";
 import { useNavigate } from "react-router";
+import { SignUpForm } from "../../types";
 
 const SignUp: React.FC = () => {
   return (

@@ -1,7 +1,6 @@
 import axios from "axios";
-import { SignUpForm } from "../types";
-
-const API_URL = "https://moneyfulpublicpolicy.co.kr";
+import { SignInForm, SignUpForm } from "../../types";
+import axiosAuthInstance from "./axiosAuthInstance";
 
 // 공통 에러 핸들러
 const handleError = (error: unknown): string => {
@@ -18,13 +17,27 @@ const handleError = (error: unknown): string => {
 
 export const signUp = async (data: SignUpForm): Promise<string> => {
   try {
-    const response = await axios.post(`${API_URL}/register`, data);
+    const response = await axiosAuthInstance.post("/register", data);
 
     if (response.status !== 200) {
       throw new Error("회원가입에 실패했습니다.");
     }
 
     return "회원가입이 완료되었습니다!";
+  } catch (error) {
+    throw new Error(handleError(error));
+  }
+};
+
+export const signIn = async (data: SignInForm) => {
+  try {
+    const response = await axiosAuthInstance.post("/login", data);
+
+    if (response.status !== 200) {
+      throw new Error("로그인에 실패했습니다.");
+    }
+
+    return response.data;
   } catch (error) {
     throw new Error(handleError(error));
   }
