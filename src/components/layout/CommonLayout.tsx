@@ -6,9 +6,9 @@ const queryClient = new QueryClient();
 const CommonLayout = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <div>
+      <main>
         <Outlet />
-      </div>
+      </main>
     </QueryClientProvider>
   );
 };
