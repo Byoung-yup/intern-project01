@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SignInForm, SignUpForm } from "../../types";
+import { SignInForm, SignUpForm, User } from "../../types";
 import axiosAuthInstance from "./axiosAuthInstance";
 
 // 공통 에러 핸들러
@@ -35,6 +35,24 @@ export const signIn = async (data: SignInForm) => {
 
     if (response.status !== 200) {
       throw new Error("로그인에 실패했습니다.");
+    }
+
+    return response.data;
+  } catch (error) {
+    throw new Error(handleError(error));
+  }
+};
+
+export const getUser = async (accessToken: string): Promise<User> => {
+  try {
+    const response = await axiosAuthInstance.get("/user", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      throw new Error("유저 정보를 가져오는데 실패했습니다.");
     }
 
     return response.data;
