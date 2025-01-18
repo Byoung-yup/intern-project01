@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { SignInForm } from "../../types";
 import { signIn } from "../../api";
 import useAuthStore from "../../stores/authStore";
+import { useNavigate } from "react-router";
 
 const SignIn: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const SignIn: React.FC = () => {
 
 const Container: React.FC = () => {
   const { register, handleSubmit } = useForm<SignInForm>();
+  let navigate = useNavigate();
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
   const onSubmit = async (data: SignInForm) => {
@@ -21,6 +23,7 @@ const Container: React.FC = () => {
       const { accessToken } = await signIn(data);
       setAccessToken(accessToken);
       alert("로그인에 성공했습니다!");
+      navigate("/");
     } catch (error) {
       alert(error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다.");
     }
