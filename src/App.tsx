@@ -1,5 +1,13 @@
 function App() {
-  return <p className="bg-red-300">hello</p>;
+  return (
+    <button
+      onClick={() => {
+        throw new Error("This is your first error!");
+      }}
+    >
+      Break the world
+    </button>
+  );
 }
 
 export default App;
